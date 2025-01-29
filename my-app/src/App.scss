@@ -1,0 +1,472 @@
+$color-pink: #ff70d9;
+$color-yellow: #ebff00;
+$color-yellow-trasparent: rgba($color-yellow, 0.6);
+$color-blue: #304571;
+$color-black: #000000;
+$color-white: #ffffff;
+$color-bg-gradient: linear-gradient(190.34deg, #0d1e48 0.28%, #304571 100%);
+$color-gradient: linear-gradient(98.25deg, #ebff00 18.56%, #ff70d9 76.02%);
+$color-gradient-transparent: linear-gradient(
+  140.47deg,
+  rgba(235, 255, 0, 0.6) 26.02%,
+  rgba(255, 112, 217, 0.6) 90.57%
+);
+
+$br-radius: 10px;
+
+$gap: 22px;
+
+@mixin responsive($breakpoint) {
+  @if $breakpoint == phone {
+    @media screen and (max-width: 768px) {
+      @content;
+    }
+  }
+  @if $breakpoint == tablet {
+    @media screen and (max-width: 1248px) {
+      @content;
+    }
+  }
+  @if $breakpoint == desktop {
+    @media screen and (min-width: 1248px) {
+      @content;
+    }
+  }
+}
+
+@mixin text-style($size, $weight: 800, $lineHeight: 1.5, $color: $color-white) {
+  font-size: $size;
+  font-weight: $weight;
+  line-height: $lineHeight;
+  color: $color;
+}
+
+body {
+  background: $color-bg-gradient;
+  margin: 0;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  min-width: 320px;
+  min-height: 100vh;
+  overflow-x: hidden;
+  width: 100%;
+  font-family: "Lato", sans-serif;
+  color: $color-white;
+}
+
+h1 {
+  @include text-style(72px, 800, 72px);
+
+  @include responsive(tablet) {
+    @include text-style(48px, 800, 48px);
+  }
+}
+h2 {
+  @include text-style(74px, 700, 74px);
+}
+
+h3 {
+  @include text-style(46px, 800, 46px);
+  width: 63%;
+  text-align: start;
+  @include responsive(tablet) {
+    @include text-style(40px, 800, 40px);
+  }
+}
+h4 {
+  @include text-style(32px, 800, 38.4px);
+  @include responsive(tablet) {
+    @include text-style(22px, 800, 26.4px);
+  }
+}
+h5 {
+  @include text-style(24px, 800, 28.8px);
+  @include responsive(tablet) {
+    @include text-style(16px, 800, 19px);
+  }
+}
+
+.yellow-text {
+  color: $color-yellow;
+}
+.pink-text {
+  color: $color-pink;
+}
+.text-center {
+  text-align: center;
+}
+
+.menu {
+  &__button {
+    display: none;
+
+    @include responsive(phone) {
+      text-align: center;
+      cursor: pointer;
+      height: 30px;
+      width: 30px;
+      padding-top: 12px;
+      padding-left: 4px;
+      display: flex;
+    }
+  }
+  &__checkbox {
+    display: none;
+
+    &:checked + .menu__button .menu__burger {
+      background-color: transparent;
+    }
+
+    &:checked + .menu__button .menu__burger::before {
+      top: 0;
+      transform: rotate(135deg);
+    }
+
+    &:checked + .menu__button .menu__burger::after {
+      top: 0;
+      transform: rotate(-135deg);
+    }
+    &:checked ~ .menu__modal {
+      transform: translateX(0%);
+    }
+  }
+
+  &__burger {
+    position: relative;
+    width: 20px;
+    height: 2px;
+    margin-top: 2px;
+    cursor: pointer;
+
+    &,
+    &::before,
+    &::after {
+      width: 22.5px;
+      height: 1.5px;
+      background-color: $color-white;
+    }
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      transition: all 0.2s;
+    }
+
+    &::before {
+      top: -7.9px;
+    }
+    &::after {
+      top: 7.9px;
+    }
+  }
+  &__modal {
+    display: none;
+    position: fixed;
+    top: 88px;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba($color-black, 0.95);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 999;
+
+    @include responsive(phone) {
+      display: flex;
+    }
+    a {
+      color: $color-white;
+      font-size: 24px;
+      margin: 15px 0;
+    }
+  }
+}
+
+.btn {
+  font-family: "Lato", sans-serif;
+  height: 54px;
+  padding: 14px 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 0;
+  border-radius: 100px;
+  cursor: pointer;
+  @include text-style(22px, 700, 26.4px);
+
+  &--primary {
+    background-color: $color-yellow;
+    color: $color-black;
+    @include responsive(phone) {
+      @include text-style(16px, 800, 19.2px);
+      color: $color-black;
+      height: 33px;
+    }
+
+    &:hover {
+      background-color: $color-yellow-trasparent;
+    }
+  }
+
+  &--outline {
+    background-color: transparent;
+    color: $color-yellow;
+    border: 2px solid $color-yellow;
+    @include responsive(tablet) {
+      @include text-style(16px, 800, 19.2px);
+      color: $color-yellow;
+      height: 33px;
+    }
+
+    &:hover {
+      border: 2px solid $color-yellow-trasparent;
+      color: $color-yellow-trasparent;
+    }
+  }
+
+  &--read-more {
+    background: none;
+    color: $color-yellow;
+    border: none;
+    font-size: 16px;
+    padding: 0;
+    &:hover {
+      color: $color-yellow-trasparent;
+    }
+  }
+}
+
+.wrapper {
+  max-width: 1248px;
+  width: 100%;
+  padding: 24px 81px;
+  margin: 0 auto;
+
+  @include responsive(tablet) {
+    padding: 28px 30px;
+  }
+}
+
+.navbar {
+  background-color: $color-black;
+  display: flex;
+  top: 0;
+  left: 0;
+  justify-content: center;
+  position: fixed;
+  width: 100%;
+  z-index: 10;
+
+  &__container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+  }
+  ul {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+
+    @include responsive(phone) {
+      display: none;
+    }
+
+    a {
+      color: $color-white;
+      @include text-style(18px, 700, 21.6px);
+
+      &:hover {
+        background: $color-gradient;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+    }
+  }
+
+  &__logo img {
+    width: 104px;
+    @include responsive(tablet) {
+      width: 71px;
+    }
+  }
+}
+
+.banner {
+  margin-top: 88px;
+  width: 100vw;
+  background-image: url("./assets/rectangle_1.png");
+  background-position: center;
+  background-size: cover;
+  @include responsive(phone) {
+    margin-top: 0;
+  }
+
+  &__container {
+    display: flex;
+    align-items: center;
+    position: relative;
+    flex-direction: row;
+    justify-content: space-between;
+
+    @include responsive(phone) {
+      justify-content: center;
+      flex-direction: column-reverse;
+      margin-top: 0;
+      padding-top: 0;
+    }
+  }
+
+  &__img {
+    display: flex;
+    align-items: center;
+    padding: 30px 0 40px 0;
+    z-index: 0;
+    @include responsive(tablet) {
+      position: relative;
+      right: 0;
+      top: 0;
+      transform: translateX(30%);
+    }
+    @include responsive(phone) {
+      position: relative;
+      transform: translateX(0%);
+    }
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: $gap;
+    @include responsive(phone) {
+      text-align: center;
+      align-items: center;
+    }
+  }
+}
+
+.content {
+  padding: 30px 0 40px 0;
+  display: flex;
+  flex-direction: column;
+
+  &__container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    @include responsive(tablet) {
+      grid-template-columns: repeat(2, 2fr);
+    }
+    @include responsive(phone) {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    position: relative;
+    height: 350px;
+    z-index: 1;
+
+    @include responsive(tablet) {
+      justify-content: end;
+    }
+
+    &__bg {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: absolute;
+      z-index: -1;
+
+      img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        position: absolute;
+        top: 0;
+        left: 0;
+        border-radius: $br-radius;
+      }
+    }
+
+    &__info {
+      display: flex;
+      flex-direction: column;
+      padding: 30px;
+      gap: $gap;
+      @include responsive(tablet) {
+        padding: 20px;
+        align-self: start;
+      }
+    }
+
+    &--first,
+    &--last {
+      @include responsive(desktop) {
+        grid-column: 1 / -1;
+
+        h3 {
+          @include text-style(74px, 800, 74px);
+        }
+      }
+    }
+  }
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: $gap;
+
+  &__text {
+    overflow: hidden;
+    max-height: 80px;
+    transition: max-height 0.3s ease-in-out;
+    position: relative;
+
+    &--expanded {
+      max-height: 1000px;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 20px;
+      transition: opacity 0.3s ease-in-out;
+    }
+
+    &--expanded::after {
+      opacity: 0;
+    }
+  }
+}
+
+.footer {
+  background-color: $color-black;
+  width: 100vw;
+
+  &__container {
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    display: flex;
+  }
+}
